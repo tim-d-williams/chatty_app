@@ -6,14 +6,14 @@ class MessageList extends Component {
 
     const messages = this.props.messages;
     const messageItem = messages.map(message => {
-      return <Message text={message} key={message.id} />
+      return <Message text={message} id={message.id} />
 
     })
 
 
     return  (
       <main className="messages">
-      {messageItem}
+        {messageItem}
       </main>
       )
     }
