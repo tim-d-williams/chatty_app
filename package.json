@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tim-d-williams/chatty_app.git"
+    "url": "git+https://github.com/tim-d-williams/chatty_app.git"
   },
   "keywords": [
     "react",
@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "react": "15.4.2",
-    "react-dom": "15.4.2"
-  }
+    "react-dom": "15.4.2",
+  },
+  "main": "server.js"
 }
