@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
-import Message from './Message.jsx';
 import MessageList from './MessageList.jsx';
 import Notification from './Notification.jsx';
 
@@ -23,8 +22,13 @@ class App extends Component {
           content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
         }
       ]
-    }
+    };
+
+    // this.props.handleChange = this.props.handleChange.bind(this);
   }
+
+
+
 
   componentDidMount() {
     console.log("componentDidMount <App />");
@@ -39,8 +43,10 @@ class App extends Component {
     }, 3000);
   }
 
+
+
   render() {
-console.log('rendering App')
+
     return (
       <div>
         <nav className="navbar">
