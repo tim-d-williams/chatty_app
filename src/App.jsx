@@ -10,7 +10,8 @@ class App extends Component {
 
     this.state = {
       currentUser: {name: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: []
+      messages: [],
+      isSystemNotifcation: false
     };
 
     this.socket = null;
@@ -29,8 +30,15 @@ class App extends Component {
   }
 
   addUsername = (name) => {
-    this.state.currentUser = name
-    console.log('currentuser', this.state.currentUser)
+    const previousUsername = (!this.state.currentUser.name ? 'Anonymous' : this.state.currentUser.name )
+    this.state.currentUser.name = name
+    console.log(this.state)
+    const usernameChange = {
+      previousUsername,
+      name,
+      isSystemNotifcation: true,
+    }
+    this.socket.send(JSON.stringify(usernameChange))
   }
 
   componentDidMount() {
@@ -69,7 +77,7 @@ class App extends Component {
         </nav>
         <Notification />
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.username} addMessage={this.addMessage} addUsername={this.addUsername}/>
+        <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} addUsername={this.addUsername}/>
     </div>
     );
 

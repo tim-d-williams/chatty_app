@@ -35,6 +35,7 @@ wss.on('connection', (ws) => {
 
 ws.on('message', function incoming (message) {
   let receivedMessage = JSON.parse(message);
+  console.log(receivedMessage)
   receivedMessage.id = uuidv4();
   const sendMessage = JSON.stringify(receivedMessage);
   wss.broadcast(sendMessage);
