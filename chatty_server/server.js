@@ -24,9 +24,9 @@ wss.on('connection', (ws) => {
 
 
 ws.on('message', function incoming (message) {
-  const receivedMessage = JSON.parse(message)
-  const id = uuidv4();
-  console.log(receivedMessage, id)
+  let receivedMessage = JSON.parse(message)
+  receivedMessage.id = uuidv4()
+  console.log(receivedMessage)
 
   })
 
