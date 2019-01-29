@@ -44,9 +44,20 @@ class App extends Component {
    this.socket.onopen = () => {
       console.log('Connected to Server')
     }
+
+  this.socket.onmessage = (event) => {
+   const receivedMessage = JSON.parse(event.data)
+   console.log(receivedMessage)
+   const messages = this.state.messages.concat(receivedMessage)
+   this.setState({
+     messages: messages
+   }
+   )
   }
+}
 
   render() {
+
     return (
       <div>
         <nav className="navbar">
