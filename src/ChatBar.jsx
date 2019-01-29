@@ -3,13 +3,20 @@ import React, {Component} from 'react';
 class ChatBar extends Component {
 
  // capture change events from the input and update state
- handleChange = event => {
-  let username = event.target.value;
-  let content = event.target.value;
+ handleChangeMessage = event => {
+   let username = this.props.currentUser.name
+   let content = event.target.value;
   // let id = this.props.currentUser.id
-  console.log(username)
    this.setState( {
       content,
+      username
+  })
+}
+
+handleChangeUsername = event => {
+  let username = event.target.value;
+  console.log(username)
+   this.setState( {
       username,
 
   })
@@ -23,6 +30,10 @@ class ChatBar extends Component {
     }
   }
 
+  handleOnBlurUsername = event => {
+      const username = this.state.username;
+      this.props.addUsername(username);
+  }
 
   //when enter key is pressed set state to new value
   handleKeyPressMessage = event => {
@@ -43,15 +54,16 @@ class ChatBar extends Component {
             placeholder="Your Name (Optional)"
             type="text"
             defaultValue={this.props.username}
-            onChange={this.handleChange}
+            onChange={this.handleChangeUsername}
             onKeyPress={this.handleKeyPressUsername}
+            onBlur={this.handleOnBlurUsername}
           />
 
           <input
             className="chatbar-message"
             placeholder="Type a message and hit ENTER"
             type="text"
-            onChange={this.handleChange}
+            onChange={this.handleChangeMessage}
             onKeyPress={this.handleKeyPressMessage}
           />
 

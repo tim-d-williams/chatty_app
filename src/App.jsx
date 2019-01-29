@@ -9,7 +9,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      currentUser: {name: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
       isSystemNotifcation: false
     };
@@ -30,9 +30,8 @@ class App extends Component {
   }
 
   addUsername = (name) => {
-    const previousUsername = (!this.state.currentUser.name ? 'Anonymous' : this.state.currentUser.name )
+    const previousUsername = this.state.currentUser.name
     this.state.currentUser.name = name
-    console.log(this.state)
     const usernameChange = {
       previousUsername,
       name,
@@ -53,20 +52,19 @@ class App extends Component {
     //   this.setState({messages: messages})
     // }, 3000);
 
-  this.socket = new WebSocket('ws://localhost:3001')
-   this.socket.onopen = () => {
-      console.log('Connected to Server')
+    this.socket = new WebSocket('ws://localhost:3001')
+    this.socket.onopen = () => {
+        console.log('Connected to Server')
     }
 
-  this.socket.onmessage = (event) => {
-   const receivedMessage = JSON.parse(event.data)
-   const messages = this.state.messages.concat(receivedMessage)
-   this.setState({
-     messages: messages
-   }
-   )
+    this.socket.onmessage = (event) => {
+    const receivedMessage = JSON.parse(event.data)
+    const messages = this.state.messages.concat(receivedMessage)
+    this.setState({
+      messages: messages
+    })
+    }
   }
-}
 
   render() {
 
