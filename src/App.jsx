@@ -9,7 +9,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+      currentUser: {name: ""}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: []
     };
 
@@ -26,6 +26,11 @@ class App extends Component {
     // })
 
     this.socket.send(JSON.stringify(message));
+  }
+
+  addUsername = (name) => {
+    this.state.currentUser = name
+    console.log('currentuser', this.state.currentUser)
   }
 
   componentDidMount() {
@@ -47,7 +52,6 @@ class App extends Component {
 
   this.socket.onmessage = (event) => {
    const receivedMessage = JSON.parse(event.data)
-   console.log(receivedMessage)
    const messages = this.state.messages.concat(receivedMessage)
    this.setState({
      messages: messages
@@ -65,7 +69,7 @@ class App extends Component {
         </nav>
         <Notification />
         <MessageList messages={this.state.messages} />
-        <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} />
+        <ChatBar currentUser={this.state.username} addMessage={this.addMessage} addUsername={this.addUsername}/>
     </div>
     );
 
