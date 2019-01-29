@@ -24,16 +24,19 @@ class App extends Component {
       ]
     };
 
-    // this.props.addMessage = this.props.addMessage.bind(this);
+    this.socket = null;
+
   }
 
 
   addMessage = (message) => {
     const existingMessages = this.state.messages;
     const newMessages = existingMessages.concat(message)
-    this.setState({
-      messages: newMessages
-    })
+    // this.setState({
+    //   messages: newMessages
+    // })
+
+    this.socket.send(JSON.stringify(message));
   }
 
   componentDidMount() {
@@ -48,13 +51,11 @@ class App extends Component {
       this.setState({messages: messages})
     }, 3000);
 
-  let socket = new WebSocket('ws://localhost:3001')
-    socket.onopen = () => {
+  this.socket = new WebSocket('ws://localhost:3001')
+   this.socket.onopen = () => {
       console.log('Connected to Server')
-}
-
+    }
   }
-
 
   render() {
     return (
@@ -62,7 +63,6 @@ class App extends Component {
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
-
         <Notification />
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} />
