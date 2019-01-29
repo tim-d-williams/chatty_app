@@ -2,43 +2,45 @@ import React, {Component} from 'react';
 
 class ChatBar extends Component {
 
- // capture change events from the input and update state
- handleChangeMessage = event => {
-   let username = this.props.currentUser.name
-   let content = event.target.value;
-  // let id = this.props.currentUser.id
-   this.setState( {
-      content,
-      username
-  })
-}
+  // capture change events from the input and update state
+  handleChangeMessage = event => {
+    let username = this.props.currentUser.name
+    let content = event.target.value;
+    // let id = this.props.currentUser.id
+    this.setState( {
+        content,
+        username,
+        type: 'postMessage'
+    })
+  }
 
-handleChangeUsername = event => {
-  let username = event.target.value;
-  console.log(username)
-   this.setState( {
-      username,
-
-  })
-}
+  handleChangeUsername = event => {
+    let username = event.target.value;
+    const previousUsername = this.props.currentUser.name
+    let content = `${previousUsername} has change their name to ${username}`;
+    this.setState( {
+        username,
+        type: 'postNotification',
+        content,
+    })
+  }
 
   //when enter key is pressed set state to new value
   handleKeyPressUsername = event => {
     if(event.key == 'Enter') {
-      const username = this.state.username;
-      this.props.addUsername(username);
+      this.props.addUsername(this.state);
     }
   }
 
   handleOnBlurUsername = event => {
-      const username = this.state.username;
-      this.props.addUsername(username);
+      this.props.addUsername(this.state);
   }
 
   //when enter key is pressed set state to new value
   handleKeyPressMessage = event => {
     if(event.key == 'Enter') {
       const newMessage = this.state
+      console.log(newMessage)
       this.props.addMessage(newMessage);
       event.target.value = '';
     }
@@ -56,7 +58,7 @@ handleChangeUsername = event => {
             defaultValue={this.props.username}
             onChange={this.handleChangeUsername}
             onKeyPress={this.handleKeyPressUsername}
-            onBlur={this.handleOnBlurUsername}
+            // onBlur={this.handleOnBlurUsername}
           />
 
           <input

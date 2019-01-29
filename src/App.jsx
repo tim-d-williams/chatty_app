@@ -11,7 +11,6 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
-      isSystemNotifcation: false
     };
 
     this.socket = null;
@@ -29,15 +28,14 @@ class App extends Component {
     this.socket.send(JSON.stringify(message));
   }
 
-  addUsername = (name) => {
-    const previousUsername = this.state.currentUser.name
-    this.state.currentUser.name = name
-    const usernameChange = {
-      previousUsername,
-      name,
-      isSystemNotifcation: true,
-    }
-    this.socket.send(JSON.stringify(usernameChange))
+  addUsername = (message) => {
+    this.socket.send(JSON.stringify(message))
+    const name = message.username
+    this.setState({
+      currentUser: {
+        name
+      }
+    })
   }
 
   componentDidMount() {
