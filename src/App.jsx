@@ -54,12 +54,11 @@ class App extends Component {
       const usernameColor = parsedMessage.payload.color;
       this.handleClientCount(parsedMessage.payload)
     } else {
-      const messages = this.state.messages.concat(parsedMessage)
-      this.setState({
-        messages: messages
-      })
-    }
-
+        const messages = this.state.messages.concat(parsedMessage)
+        this.setState({
+          messages: messages
+        })
+      }
     }
   }
 
@@ -75,8 +74,6 @@ class App extends Component {
         <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} addUsername={this.addUsername}/>
     </div>
     );
-
-
   }
 }
 export default App;

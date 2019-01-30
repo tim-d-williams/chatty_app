@@ -16,8 +16,6 @@ const server = express()
 // Create the WebSockets server
 const wss = new WebSocket.Server({ server });
 
-
-
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
@@ -33,7 +31,7 @@ wss.broadcast = function broadcast(data) {
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
-
+  //random color selection from array for each client connection
   colorChoice = [ '#FF8C00', '#DC143C', '#4169E1', '#32CD32' ];
   const randomColor = colorChoice[Math.floor(Math.random() * colorChoice.length)];
   ws.color = randomColor;
@@ -70,8 +68,7 @@ wss.on('connection', (ws) => {
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on('close', () => {
-
-    console.log('Client disconnected')
+  console.log('Client disconnected')
 
   wss.clients.forEach(client => {
     let clientCount = {
@@ -80,11 +77,9 @@ wss.on('connection', (ws) => {
         count: wss.clients.size
       }
     }
-
     client.send(JSON.stringify(clientCount))
+    })
   })
-})
-
 });
 
 

@@ -17,7 +17,6 @@ class MessageList extends Component {
           // show an error in the console if the message type is unknown
           throw new Error("Unknown event type " + message.type);
       }
-
     })
 
     return  (

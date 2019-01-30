@@ -6,14 +6,12 @@ class ChatBar extends Component {
   handleChangeMessage = event => {
     let username = this.props.currentUser.name
     let content = event.target.value;
-    // let id = this.props.currentUser.id
     this.setState( {
       type: 'postMessage',
       content,
       username,
-
-    })
-  }
+      })
+    }
 
   handleChangeUsername = event => {
     const username = event.target.value;
@@ -53,8 +51,8 @@ class ChatBar extends Component {
       const newMessage = this.state
       this.props.addMessage(newMessage);
       event.target.value = '';
+      }
     }
-  }
   }
 
   render() {
