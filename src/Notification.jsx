@@ -6,7 +6,7 @@ class Notification extends Component {
 
     return  (
       <div className="message system">
-
+      <span>{this.props.text.content}</span>
       </div>
       )
     }

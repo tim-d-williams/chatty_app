@@ -8,9 +8,10 @@ class ChatBar extends Component {
     let content = event.target.value;
     // let id = this.props.currentUser.id
     this.setState( {
-        content,
-        username,
-        type: 'postMessage'
+      type: 'postMessage',
+      content,
+      username,
+
     })
   }
 
@@ -19,9 +20,9 @@ class ChatBar extends Component {
     const previousUsername = this.props.currentUser.name
     let content = `${previousUsername} has change their name to ${username}`;
     this.setState( {
-        username,
         type: 'postNotification',
         content,
+        username,
     })
   }
 
@@ -32,15 +33,14 @@ class ChatBar extends Component {
     }
   }
 
-  handleOnBlurUsername = event => {
-      this.props.addUsername(this.state);
-  }
+  // handleOnBlurUsername = event => {
+  //     this.props.addUsername(this.state);
+  // }
 
   //when enter key is pressed set state to new value
   handleKeyPressMessage = event => {
     if(event.key == 'Enter') {
       const newMessage = this.state
-      console.log(newMessage)
       this.props.addMessage(newMessage);
       event.target.value = '';
     }
