@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ChatBar from './ChatBar.jsx';
 import MessageList from './MessageList.jsx';
 import Notification from './Notification.jsx';
+import Message from './Message.jsx';
 
 
 class App extends Component {
@@ -50,7 +51,7 @@ class App extends Component {
 
     let messageType = parsedMessage.type
     if (messageType === 'clientCount') {
-
+      const usernameColor = parsedMessage.payload.color;
       this.handleClientCount(parsedMessage.payload)
     } else {
       const messages = this.state.messages.concat(parsedMessage)
@@ -68,9 +69,9 @@ class App extends Component {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
-          <span>{this.state.clientCount} users online</span>
+          <span className="user-count">{this.state.clientCount} users online</span>
         </nav>
-        <MessageList messages={this.state.messages} />
+        <MessageList messages={this.state.messages} usernameColor={this.usernameColor}/>
         <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} addUsername={this.addUsername}/>
     </div>
     );

@@ -26,24 +26,27 @@ wss.broadcast = function broadcast(data) {
   });
 };
 
+
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('Client connected');
 
+
+  colorChoice = [ '#FF8C00', '#DC143C', '#4169E1', '#32CD32' ];
+  const randomColor = colorChoice[Math.floor(Math.random() * colorChoice.length)];
+  ws.color = randomColor;
+
   wss.clients.forEach(client => {
     let clientCount = {
       type: 'clientCount',
       payload: {
-        count: wss.clients.size
+        count: wss.clients.size,
       }
     }
-
     client.send(JSON.stringify(clientCount))
   })
-
-  // ws.send(JSON.stringify(usersOnline))
 
   ws.on('message', function incoming (message) {
     let receivedMessage = JSON.parse(message);
@@ -60,6 +63,7 @@ wss.on('connection', (ws) => {
         throw new Error("Unknown event type " + receivedMessage.type);
     }
     receivedMessage.id = uuidv4();
+    receivedMessage.color = ws.color;
     const sendMessage = JSON.stringify(receivedMessage);
     wss.broadcast(sendMessage);
   })

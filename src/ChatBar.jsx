@@ -16,9 +16,9 @@ class ChatBar extends Component {
   }
 
   handleChangeUsername = event => {
-    let username = event.target.value;
+    const username = event.target.value;
     const previousUsername = this.props.currentUser.name
-    let content = `${previousUsername} has change their name to ${username}`;
+    const content = `${previousUsername} has change their name to ${username}`;
     this.setState( {
         type: 'postNotification',
         content,
@@ -28,22 +28,33 @@ class ChatBar extends Component {
 
   //when enter key is pressed set state to new value
   handleKeyPressUsername = event => {
-    if(event.key == 'Enter') {
+    const username = event.target.value;
+    const previousUsername = this.props.currentUser.name
+
+    if (username !== previousUsername) {
+      if(event.key == 'Enter') {
+        this.props.addUsername(this.state);
+      }
+    }
+  }
+
+  handleOnBlurUsername = event => {
+    const username = event.target.value;
+    const previousUsername = this.props.currentUser.name
+    if (username !== previousUsername) {
       this.props.addUsername(this.state);
     }
   }
 
-  // handleOnBlurUsername = event => {
-  //     this.props.addUsername(this.state);
-  // }
-
   //when enter key is pressed set state to new value
   handleKeyPressMessage = event => {
     if(event.key == 'Enter') {
+      if(event.target.value.length > 0) {
       const newMessage = this.state
       this.props.addMessage(newMessage);
       event.target.value = '';
     }
+  }
   }
 
   render() {
@@ -58,7 +69,7 @@ class ChatBar extends Component {
             defaultValue={this.props.username}
             onChange={this.handleChangeUsername}
             onKeyPress={this.handleKeyPressUsername}
-            // onBlur={this.handleOnBlurUsername}
+            onBlur={this.handleOnBlurUsername}
           />
 
           <input
