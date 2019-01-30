@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Anonymous"}, // optional. if currentUser is not defined, it means the user is Anonymous
       messages: [],
+      clientCount: 0
     };
 
     this.socket = null;
@@ -32,6 +33,12 @@ class App extends Component {
     })
   }
 
+  handleClientCount = (data) => {
+    this.setState({
+      clientCount: data.count
+    })
+  }
+
   componentDidMount() {
     this.socket = new WebSocket('ws://localhost:3001')
     this.socket.onopen = () => {
@@ -39,12 +46,19 @@ class App extends Component {
     }
 
     this.socket.onmessage = (event) => {
-    const receivedMessage = JSON.parse(event.data)
-    console.log(receivedMessage)
-    const messages = this.state.messages.concat(receivedMessage)
-    this.setState({
-      messages: messages
-    })
+    const parsedMessage = JSON.parse(event.data)
+
+    let messageType = parsedMessage.type
+    if (messageType === 'clientCount') {
+
+      this.handleClientCount(parsedMessage.payload)
+    } else {
+      const messages = this.state.messages.concat(parsedMessage)
+      this.setState({
+        messages: messages
+      })
+    }
+
     }
   }
 
@@ -54,7 +68,7 @@ class App extends Component {
       <div>
         <nav className="navbar">
           <a href="/" className="navbar-brand">Chatty</a>
-
+          <span>{this.state.clientCount} users online</span>
         </nav>
         <MessageList messages={this.state.messages} />
         <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage} addUsername={this.addUsername}/>
