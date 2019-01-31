@@ -29,7 +29,7 @@ class ChatBar extends Component {
     const username = event.target.value;
     const previousUsername = this.props.currentUser.name
 
-    if (username !== previousUsername) {
+    if ( username !== previousUsername && username )  {
       if(event.key == 'Enter') {
         this.props.addUsername(this.state);
       }
