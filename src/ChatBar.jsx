@@ -39,7 +39,7 @@ class ChatBar extends Component {
   handleOnBlurUsername = event => {
     const username = event.target.value;
     const previousUsername = this.props.currentUser.name
-    if (username !== previousUsername) {
+    if (username !== previousUsername  && username) {
       this.props.addUsername(this.state);
     }
   }
